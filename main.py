@@ -17,7 +17,7 @@ Builder.load_file('frontend.kv')
 
 
 class FirstScreen(Screen):
-    def search_image(self):
+    def get_image_link(self):
         # Get user query from text input
         query = self.manager.current_screen.ids.user_query.text
         print(f"Searching '{query}'")
@@ -26,22 +26,31 @@ class FirstScreen(Screen):
         page = wikipedia.page(query)
         images = page.images
         if len(images) > 0:
-            image_link = images[0]
+            return images[0]
 
+    def download_image(self):
         # Download Image
+        image_link = self.get_image_link()
         print(f"Downloading image {image_link}")
+
+        # Set headers
         headers = {'User-Agent': 'CoolBot/0.0 (https://example.org/coolbot/; coolbot@example.org)'}
+        # Get requests
         req = requests.get(image_link, headers=headers)
 
-        image_name = query + '.jpg'
+        image_name = 'image.jpg'
         image_path = "files/images/" + image_name
 
         with open(image_path, 'wb') as file:
             file.write(req.content)
 
         file.close()
+
+        return image_path
+
+    def set_image(self):
         # Set the image in the Image widget
-        self.manager.current_screen.ids.img.source = image_path
+        self.manager.current_screen.ids.img.source = self.download_image()
 
 
 class RootWidget(ScreenManager):
