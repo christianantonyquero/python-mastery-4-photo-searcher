@@ -62,26 +62,6 @@ class MainApp(App):
         return RootWidget()
 
 
-class Webcam:
-    def start(self):
-        pass
-
-    def stop(self):
-        pass
-
-    def capture(self):
-        pass
-
-
-class FileSharer:
-    def __init__(self, filepath, api):
-        self.filepath = filepath
-        self.api = api
-
-    def share(self):
-        pass
-
-
 def main():
     """ Main entry point of the app """
     MainApp().run()
