@@ -7,6 +7,27 @@ __author__ = "Christian Antony Quero"
 __version__ = "0.1.0"
 __license__ = "MIT"
 
+from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.lang import Builder
+
+Builder.load_file('frontend.kv')
+
+
+class FirstScreen(Screen):
+    def search_image(self):
+        print("Working")
+        self.manager.current_screen.ids.img.source = 'files/images/down.png'
+
+
+class RootWidget(ScreenManager):
+    pass
+
+
+class MainApp(App):
+    def build(self):
+        return RootWidget()
+
 
 class Webcam:
     def start(self):
@@ -30,7 +51,7 @@ class FileSharer:
 
 def main():
     """ Main entry point of the app """
-    pass
+    MainApp().run()
 
 
 if __name__ == "__main__":
